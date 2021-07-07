@@ -1,6 +1,6 @@
 const express = require('express')
 const expHbs = require('express-handlebars')
-const { courseDetails } = require('./features/courseController')
+const { courseDetails, courseUnits } = require('./features/courseController')
 const { index } = require('./features/indexController')
 
 const app = express()
@@ -20,6 +20,7 @@ app.use(express.static('public'))
 // Routes
 app.get('/', index)
 app.get('/courses/:code', courseDetails)
+app.get('/courses/:code/units', courseUnits)
 
 const PORT = 3000
 app.listen(PORT,
