@@ -18,7 +18,10 @@ const courseUnits = (req, res) => {
   res.render('course-units', { units: course.units })
 }
 
-module.exports = {
-  courseDetails,
-  courseUnits
+const courseStudents = (req, res) => {
+  const courseCode = req.params.code
+  const course = getCourse(courseCode)
+  res.render('course-students', { course: course })
 }
+
+module.exports = { courseDetails, courseUnits, courseStudents }
