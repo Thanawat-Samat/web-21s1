@@ -201,6 +201,41 @@ const createCovidRecord = async (req, res) => {
   }
 }
 
+const UpdateCovidRecord = async (req, res) => {
+  try {
+    // 1. Inputs
+    const stateId = req.params.stateId
+    const { casesNew } = req.body
+    const record = { casesNew }
+
+    // 2. Query
+    const query = db.collection('covid-latest').doc(stateId).set(record, { merge: true })
+
+    // 3. Response
+    await query
+    res.sendStatus(200)
+  } catch (err) {
+    console.error(err)
+    res.sendStatus(500)
+  }
+}
+const DeleteCovidRecord = async (req, res) => {
+  try {
+    // 1. Inputs
+    const stateId = req.params.stateId
+
+    // 2. Query
+    const query = db.collection('covid-latest').doc(stateId).delete()
+
+    // 3. Response
+    await query
+    res.sendStatus(403)
+  } catch (err) {
+    console.error(err)
+    res.sendStatus(500)
+  }
+}
+
 module.exports = {
   readBooks,
   readBook,
@@ -210,5 +245,7 @@ module.exports = {
   deleteBook,
   readCovidRecords,
   readCovidRecord,
-  createCovidRecord
+  createCovidRecord,
+  UpdateCovidRecord,
+  DeleteCovidRecord
 }
