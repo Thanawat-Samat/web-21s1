@@ -1,6 +1,6 @@
 const express = require('express')
 const { json, urlencoded } = require('body-parser')
-const { readBooks, readBook, createBook, replaceBook, updateBook, deleteBook, readCovidRecords, readCovidRecord } = require('./features/book-controller')
+const { readBooks, readBook, createBook, replaceBook, updateBook, deleteBook, readCovidRecords, readCovidRecord, createCovidRecord } = require('./features/book-controller')
 
 const app = express()
 
@@ -20,6 +20,8 @@ app.delete('/books/:isbn13', deleteBook)
 // Routes Lab
 app.get('/covid', readCovidRecords)
 app.get('/covid/:stateId', readCovidRecord)
+app.post('/covid/', createCovidRecord)
+
 // TODO later
 
 module.exports = { app }

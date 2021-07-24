@@ -1,5 +1,7 @@
 const { db } = require('../_services/firebase-admin-initialized')
 
+const { firestore } = require('firebase-admin')
+
 /// ///////////////////////////// Book \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 const readBooks = async (req, res) => {
@@ -179,6 +181,26 @@ const readCovidRecord = async (req, res) => {
   }
 }
 
+const createCovidRecord = async (req, res) => {
+  try {
+    // 1. Inputs
+    const { date, stateId, cases, casesNew, vaccineOne, vaccineOnePercent, vaccineComplete, vaccineCompletePercent } = req.body
+    const record = { stateId, date: firestore.Timestamp.fromMillis(date), cases, casesNew, vaccineOne, vaccineOnePercent, vaccineComplete, vaccineCompletePercent }
+
+    // 2. Query
+    const query = db.collection('covid-latest')
+      .doc(stateId)
+      .set(record, { merge: true })
+
+    // 3. Response
+    await query
+    res.sendStatus(201)
+  } catch (err) {
+    console.error(err)
+    res.sendStatus(500)
+  }
+}
+
 module.exports = {
   readBooks,
   readBook,
@@ -187,5 +209,6 @@ module.exports = {
   updateBook,
   deleteBook,
   readCovidRecords,
-  readCovidRecord
+  readCovidRecord,
+  createCovidRecord
 }
