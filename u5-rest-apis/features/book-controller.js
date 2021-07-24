@@ -1,5 +1,7 @@
 const { db } = require('../_services/firebase-admin-initialized')
 
+/// ///////////////////////////// Book \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 const readBooks = async (req, res) => {
   try {
     // 1. Inputs
@@ -123,11 +125,67 @@ const deleteBook = async (req, res) => {
   }
 }
 
+/// ///////////////////////////// Covid \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+const readCovidRecords = async (req, res) => {
+  try {
+    // 1. Inputs
+    // none
+
+    // 2. Query
+    const query = db.collection('covid-latest').get()
+
+    // 3. Response
+    const payload = (await query)
+      .docs
+      .map(doc => doc.data())
+      .map(({ date, stateId, stateName, cases, casesNew, vaccineOne, vaccineOnePercent, vaccineComplete, vaccineCompletePercent }) =>
+        ({ date: date.toMillis(), stateId, stateName, cases, casesNew, vaccineOne, vaccineOnePercent, vaccineComplete, vaccineCompletePercent }))
+
+    res.json({
+      result: 'ok',
+      payload: payload,
+      count: payload.length
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({
+      result: 'error',
+      payload: [],
+      count: 0
+    })
+  }
+}
+
+const readCovidRecord = async (req, res) => {
+  try {
+    // 1. Inputs
+    const stateId = req.params.stateId.toUpperCase()
+    // 2. Query
+    const query = db.collection('covid-history')
+      .doc(stateId)
+      .get()
+
+    // 3. Response
+    const snapshot = await query
+    if (!snapshot.exists) { return res.status(404).json({ result: 'not found' }) }
+
+    const { stateName, history } = snapshot.data()
+    const payload = { stateId, stateName, history: history.map(item => ({ date: item.date.toMillis(), cases: item.cases, casesNew: item.casesNew, vaccineOne: item.vaccineOne, vaccineOnePercent: item.vaccineOnePercent, vaccineComplete: item.vaccineComplete, vaccineCompletePercent: item.vaccineCompletePercent })) }
+    res.json({ result: 'ok', payload })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ result: 'error' })
+  }
+}
+
 module.exports = {
   readBooks,
   readBook,
   createBook,
   replaceBook,
   updateBook,
-  deleteBook
+  deleteBook,
+  readCovidRecords,
+  readCovidRecord
 }

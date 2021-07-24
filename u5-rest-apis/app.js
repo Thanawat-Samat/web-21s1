@@ -1,6 +1,6 @@
 const express = require('express')
 const { json, urlencoded } = require('body-parser')
-const { readBooks, readBook, createBook, replaceBook, updateBook, deleteBook } = require('./features/book-controller')
+const { readBooks, readBook, createBook, replaceBook, updateBook, deleteBook, readCovidRecords, readCovidRecord } = require('./features/book-controller')
 
 const app = express()
 
@@ -16,6 +16,10 @@ app.post('/books', createBook)
 app.put('/books/:isbn13', replaceBook)
 app.patch('/books/:isbn13', updateBook)
 app.delete('/books/:isbn13', deleteBook)
+
+// Routes Lab
+app.get('/covid', readCovidRecords)
+app.get('/covid/:stateId', readCovidRecord)
 // TODO later
 
 module.exports = { app }
