@@ -4,6 +4,7 @@ const { json, urlencoded } = require('body-parser')
 
 const { index } = require('./features/index-controller')
 const { athleteCreateForm } = require('./features/athletes-controller')
+const { athleteAthletesList, athleteAthletesDetails, athleteAthletesSchedule, athleteAthletesAthlete } = require('./features/athleteslist-controller')
 
 const app = express()
 
@@ -26,6 +27,9 @@ app.get('/', index)
 
 // TODO: เขียนเส้นทางของคุณที่นี่ // Write your routes here
 app.get('/athletes/new', athleteCreateForm)
+app.get('/athletes/', athleteAthletesList)
+app.get('/athletes/shelly-ann-fraser-pryce', athleteAthletesDetails)
+app.get('/athletes/shelly-ann-fraser-pryce/schedule', athleteAthletesSchedule)
 
 // General
 app.get('/images/:catchall', (_req, res) => res.redirect('/images/404.jpg'))
