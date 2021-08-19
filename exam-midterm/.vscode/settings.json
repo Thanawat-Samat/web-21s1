@@ -52,5 +52,8 @@
   "vetur.format.defaultFormatter.html": "none",
   "vetur.format.defaultFormatter.css": "none",
   "vetur.format.defaultFormatter.scss": "none",
-  "windicss.includeLanguages": { "vue": "html" }
+  "windicss.includeLanguages": {
+    "vue": "html"
+  },
+  "git.ignoreLimitWarning": true
 }
