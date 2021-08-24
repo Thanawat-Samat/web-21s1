@@ -1,0 +1,14 @@
+{{#>becinema}}
+
+<h1>Cinemas</h1>
+
+<ul class="cinema-list">
+  {{#each cinemaList}}
+  <li>
+    <a href='/cinemas/{{ slug }}'>{{ name }}</a>
+    {{ city }}
+  </li>
+  {{/each}}
+</ul>
+
+{{/becinema}}
