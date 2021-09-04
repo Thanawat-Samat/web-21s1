@@ -20,11 +20,20 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Video } from '@/store/models'
 import VideoTease from './VideoTease.vue'
-
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate'
+])
 @Component({ components: { VideoTease } })
 export default class VideoPlayer extends Vue {
-  video: Video | null = null
-  suggestions: Video[] = []
+  get video (): Video | null {
+    return this.$store.getters.videosById[this.$route.params.videoId] ?? null
+  }
+
+  get suggestions (): Video[] {
+    return this.$store.state.videos.slice(0, 6)
+  }
 }
 </script>
 
@@ -32,16 +41,13 @@ export default class VideoPlayer extends Vue {
 .playback {
   display: flex;
 }
-
 .playback-player {
   flex: 1 0 600px;
   margin: 0 12px 0 0;
 }
-
 .playback-videos {
   flex: 0 0 400px;
 }
-
 .playback-player > img {
   display: block;
   width: 100%;

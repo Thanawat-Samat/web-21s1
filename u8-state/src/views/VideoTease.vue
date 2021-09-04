@@ -28,9 +28,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-
 @Component({ props: ['video'] })
-export default class Home extends Vue { }
+export default class VideoTease extends Vue {
+  addToWatchLater (videoId: string): void {
+    this.$store.dispatch('addToWatchLater', videoId)
+  }
+}
 </script>
 
 <style scoped>
@@ -40,19 +43,16 @@ export default class Home extends Vue { }
   text-decoration: none;
   margin: 0 0 16px 0;
 }
-
 .next-card > div {
   position: relative;
   flex: 0 0 150px;
   margin: 0 12px 0 0;
   border: 0;
 }
-
 .thumb {
   display: block;
   width: 100%;
 }
-
 .watch-later {
   position: absolute;
   width: 1.25rem;
@@ -61,11 +61,9 @@ export default class Home extends Vue { }
   padding: 0.25rem;
   filter: invert();
 }
-
 .next-card > div.description {
   flex: auto;
 }
-
 .next-card > div.description > p {
   margin: 0;
   padding: 2px 4px;

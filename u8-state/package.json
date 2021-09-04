@@ -19,6 +19,7 @@
     "vuexfire": "^3.2.5"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.172",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
