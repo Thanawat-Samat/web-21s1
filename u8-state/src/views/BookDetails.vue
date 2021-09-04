@@ -23,8 +23,29 @@ import { Book } from '@/store/models'
 
 @Component({ components: { BookCard } })
 export default class BookDetails extends Vue {
-  get book(): Book | null { return null }
-  get relatedBooks(): Book[] { return [] }
+  get book (): Book | null {
+    return this.$store.getters.booksByIsbn13[this.$route.params.isbn13] ?? null
+  }
+
+  get relatedBooks (): Book[] {
+    const book = this.book
+    if (!book) return []
+    const keyterms = [
+      ...book.title.split(' '),
+      ...book.authors.flatMap(a => a.split(' '))
+    ].filter(word => word.length > 3)
+    return this.$store.state.books.filter((b: Book) =>
+      b.isbn13 !== book.isbn13 &&
+      keyterms.some(term =>
+        b.title.includes(term) ||
+        b.authors.some(author => author.includes(term))
+      )
+    )
+  }
+
+  addToCart (isbn13: string): void {
+    this.$store.dispatch('addToCart', isbn13)
+  }
 }
 </script>
 

@@ -14,7 +14,9 @@
           }}
         </router-link>
         <router-link :to="{ name: 'BookCart' }">
-          <img src="/images/icons/cart-variant.png" alt="Cart" />0
+          <img src="/images/icons/cart-variant.png" alt="Cart" />{{
+            $store.getters.cartCount
+          }}
         </router-link>
       </div>
     </div>

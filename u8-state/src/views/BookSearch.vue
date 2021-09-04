@@ -21,7 +21,15 @@ import BookCard from './BookCard.vue'
 @Component({ components: { BookCard } })
 export default class BookSearch extends Vue {
   q = ''
-  get books(): Book[] { return [] }
+  get books (): Book[] {
+    const qLower = this.q.toLowerCase()
+    return this.$store.state.books.filter((book: Book) =>
+      book.title.toLowerCase().includes(qLower) ||
+      book.authors.some(
+        author => author.toLowerCase().includes(qLower)) ||
+      book.description.toLowerCase().includes(qLower)
+    )
+  }
 }
 </script>
 
@@ -33,7 +41,7 @@ export default class BookSearch extends Vue {
 input {
   font-size: 1.5rem;
   padding: 0.5rem;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 input::-webkit-input-placeholder {

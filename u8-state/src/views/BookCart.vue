@@ -19,8 +19,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { mapGetters } from 'vuex'
 
-@Component
+@Component({
+  computed: {
+    ...mapGetters(['cart', 'cartTotal'])
+  }
+})
+
 export default class BookCart extends Vue { }
 </script>
 
