@@ -2,75 +2,70 @@
 @import "~bulma/sass/utilities/_all";
 
 // Set your colors
-$primary: #8c67ef;
+$primary: #42b883;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
+$dark: #35495e;
+$dark-invert: findColorInvert($dark);
 $twitter: #4099FF;
 $twitter-invert: findColorInvert($twitter);
+$pancakes: #123456;
+$pancake-invert: findColorInvert($pancakes);
 
 // Lists and maps
 $custom-colors: null !default;
 $custom-shades: null !default;
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
-$colors: mergeColorMaps(
-    (
-        "white": (
-            $white,
+$colors: mergeColorMaps(("white": ($white,
             $black,
         ),
-        "black": (
-            $black,
+        "black": ($black,
             $white,
         ),
-        "light": (
-            $light,
+        "light": ($light,
             $light-invert,
         ),
-        "dark": (
-            $dark,
+        "dark": ($dark,
             $dark-invert,
         ),
-        "primary": (
-            $primary,
+        "primary": ($primary,
             $primary-invert,
             $primary-light,
             $primary-dark,
         ),
-        "link": (
-            $link,
+        "link": ($link,
             $link-invert,
             $link-light,
             $link-dark,
         ),
-        "info": (
-            $info,
+        "info": ($info,
             $info-invert,
             $info-light,
             $info-dark,
         ),
-        "success": (
-            $success,
+        "success": ($success,
             $success-invert,
             $success-light,
             $success-dark,
         ),
-        "warning": (
-            $warning,
+        "warning": ($warning,
             $warning-invert,
             $warning-light,
             $warning-dark,
         ),
-        "danger": (
-            $danger,
+        "danger": ($danger,
             $danger-invert,
             $danger-light,
             $danger-dark,
         ),
+        "twitter": ($twitter,
+            $twitter-invert),
+        "pancake": ($pancakes,
+            $pancake-invert),
     ),
-    $custom-colors
-);
+    $custom-colors);
 
 // Links
 $link: $primary;
