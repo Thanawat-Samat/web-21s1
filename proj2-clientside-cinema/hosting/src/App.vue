@@ -1,9 +1,44 @@
 <template>
-  <div
-    id="app"
-    class="has-background-light"
-  >
-    <!-- ADD NAVBAR HERE -->
+  <div id="app" class="has-background-light">
+    <b-navbar class="is-dark">
+      <template #brand>
+        <b-navbar-item
+          tag="router-link"
+          :to="{ path: '/' }"
+          class="is-size-3 has-text-weight-bold navbar-brand ml-5"
+        >
+          BECinema
+        </b-navbar-item>
+      </template>
+      <template #start>
+        <b-navbar-item href="/cinemas">Cinemas</b-navbar-item>
+        <b-navbar-item href="/films">Films</b-navbar-item>
+      </template>
+
+      <template #end>
+        <b-navbar-dropdown class="has-dropdown navbar-item has-dropdown">
+          <template #label>
+            <b-icon icon="map-marker-radius-outline" class="mr-2"></b-icon>
+            Bangkok
+          </template>
+          <b-navbar-item href="#">Bangkok</b-navbar-item>
+          <b-navbar-item href="#">Chiang Mai</b-navbar-item>
+          <b-navbar-item href="#">Phitsanulok</b-navbar-item>
+        </b-navbar-dropdown>
+        <b-navbar-dropdown class="has-dropdown navbar-item has-dropdown">
+          <template #label>
+            <img
+              src="images\accounts\chaz.jpg"
+              alt="Chaz"
+              style="border-radius: 50%"
+              class="mr-2"
+            />
+            Chaz
+          </template>
+          <b-navbar-item href="/tickets">My Tickets</b-navbar-item>
+        </b-navbar-dropdown>
+      </template>
+    </b-navbar>
 
     <div class="container py-5">
       <router-view />
@@ -14,9 +49,7 @@
       <div class="container">
         <ol>
           <li>
-            <router-link :to="{ name: 'CinemaList' }">
-              Cinema List
-            </router-link>
+            <router-link :to="{ name: 'CinemaList' }">Cinema List</router-link>
           </li>
           <li>
             <router-link
@@ -29,9 +62,7 @@
             </router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'FilmList' }">
-              Film List
-            </router-link>
+            <router-link :to="{ name: 'FilmList' }">Film List</router-link>
           </li>
           <li>
             <router-link
@@ -56,9 +87,7 @@
             </router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'Tickets' }">
-              My Tickets
-            </router-link>
+            <router-link :to="{ name: 'Tickets' }">My Tickets</router-link>
           </li>
         </ol>
       </div>
