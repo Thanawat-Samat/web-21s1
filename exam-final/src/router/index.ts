@@ -24,6 +24,21 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/sports/:sportsBySlug',
+    name: 'SportDetails',
+    component: SportDetails
+  },
+  {
+    path: '/sports',
+    name: 'SportList',
+    component: SportList
+  },
+  {
+    path: '/sports/:sportsById',
+    name: 'SportCreate',
+    component: SportCreate
   }
 ]
 
