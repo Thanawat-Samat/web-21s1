@@ -1,0 +1,8 @@
+#secrets
+service-account*
+
+#deps
+node_modules
+
+#os
+.ds_store
