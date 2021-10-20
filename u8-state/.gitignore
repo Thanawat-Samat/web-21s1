@@ -1,0 +1,14 @@
+#secrets
+firebase-config*.ts
+.env.*.local
+
+#deps, build
+node_modules
+/dist
+
+# Log files
+* .log*
+
+#OS
+.DS_Store
+
