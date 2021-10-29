@@ -1,11 +1,11 @@
 <template>
   <div id="app" class="has-background-light">
-    <b-navbar class="is-dark">
+    <b-navbar class="is-dark" wrapper-class="container">
       <template #brand>
         <b-navbar-item
           tag="router-link"
-          :to="{ path: '/' }"
-          class="is-size-3 has-text-weight-bold navbar-brand ml-5"
+          :to="{ name: 'Home' }"
+          class="is-size-3 has-text-weight-bold navbar-brand"
         >
           BECinema
         </b-navbar-item>
