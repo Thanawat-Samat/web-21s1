@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@mdi/font": "^6.1.95",
+    "buefy": "^0.9.10"
+  }
+}
