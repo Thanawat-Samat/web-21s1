@@ -1,9 +1,66 @@
 <template>
-  <div v-if="screening"></div>
+   <div class="book" v-if="screening">
+    <h1 class="title">Book Now!</h1>
+    <table class="table is-bordered has-background-light">
+      <tr>
+        <td>Film</td>
+        <td class="has-background-white">{{ screening.filmName }}</td>
+        <td>Cinema</td>
+        <td class="has-background-white">{{ screening.cinemaName }}</td>
+      </tr>
+      <tr>
+        <td>Time</td>
+        <td class="has-background-white">{{ screening.timeString }}</td>
+        <td>Seats</td>
+        <td class="has-background-white">{{ seats.length }}</td>
+      </tr>
+    </table>
+
+    <div :class="`booking-seats mt-6 ${screening.layout}`">
+      <template v-for="seat in screening.seatsAvailable">
+        <input
+          :id="`seats-${seat}`"
+          :key="`seats-${seat}`"
+          v-model="seats"
+          type="checkbox"
+          :value="seat"
+        /><label
+          :id="`label-seats-${seat}`"
+          :for="`seats-${seat}`"
+          :key="`label-seats-${seat}`"
+          >{{ seat }}</label
+        ></template
+      >
+      <template v-for="seat in screening.seatsUnavailable">
+        <input
+          :id="`seats-${seat}`"
+          :key="`seats-${seat}`"
+          v-model="seats"
+          type="checkbox"
+          :value="seat"
+          disabled=""
+        /><label
+          :id="`label-seats-${seat}`"
+          :for="`seats-${seat}`"
+          :key="`label-seats-${seat}`"
+          >{{ seat }}</label
+        ></template
+      >
+    </div>
+    <button
+      type="button"
+      class="button mt-6 is-large is-primary"
+      expanded
+      @click="book(ticket)"
+    >
+      <span>Book</span>
+    </button>
+  </div>
 </template>
 
 <script lang="ts">
 import { Screening } from '@/store/models'
+import { db, FieldValue } from '@/_services/firebase-initialized'
 import Vue from 'vue'
 import Component from 'vue-class-component'
 
@@ -11,6 +68,51 @@ import Component from 'vue-class-component'
 export default class Book extends Vue {
   screening: Screening | null = null
   seats: string[] = []
+  saving = false
+  get screeningSlug (): string {
+    return this.$route.params.slug
+  }
+
+  created (): void {
+    this.$bind('screening', db.collection('screenings').doc(this.screeningSlug))
+  }
+
+  async book (): Promise<void> {
+    const screening = this.screening
+    if (!screening) return
+    this.saving = true
+    const { cinemaName, date, filmName, screen, timeString } = screening
+    const ticket = {
+      cinemaName,
+      date,
+      filmName,
+      screen,
+      timeString,
+      createdAt: FieldValue.serverTimestamp(),
+      seats: this.seats,
+      screeningSlug: this.screeningSlug
+    }
+    const screeningUpdate = {
+      seatsAvailable: FieldValue.arrayRemove(...this.seats),
+      seatsUnavailable: FieldValue.arrayUnion(...this.seats)
+    }
+    const batch = db.batch()
+    batch.set(
+      db
+        .collection('users')
+        .doc('chaz')
+        .collection('tickets')
+        .doc(),
+      ticket
+    )
+    batch.set(
+      db.collection('screenings').doc(this.screeningSlug),
+      screeningUpdate,
+      { merge: true }
+    )
+    await batch.commit()
+    this.$router.push({ name: 'Tickets' })
+  }
 }
 </script>
 
