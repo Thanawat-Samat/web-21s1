@@ -4,12 +4,12 @@
     <div class="film-grid">
       <router-link
         v-for="film in films"
-        :key="film.id"
+        :key="film.slug"
         :to="{
           name: 'FilmDetails',
           params: { slug: film.slug },
         }"
-        ><img :src="`/images/films/${film.slug}.jpg`" alt="film.title" />
+        ><img :src="`/images/films/${film.slug}.jpg`" :alt="`${film.title}`" />
         <p class="is-size-4 has-text-dark has-text-weight-bold">
           {{ film.title }}
         </p>
