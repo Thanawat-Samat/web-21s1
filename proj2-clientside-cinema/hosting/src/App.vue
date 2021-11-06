@@ -16,14 +16,20 @@
       </template>
 
       <template #end>
-        <b-navbar-dropdown class="has-dropdown navbar-item has-dropdown">
-          <template #label>
-            <b-icon icon="map-marker-radius-outline" class="mr-2"></b-icon>
-            Bangkok
+        <b-navbar-dropdown right
+          ><template #label>
+            <div style="user-select: none;">
+              <b-icon icon="map-marker-radius-outline" class="mr-2"></b-icon>
+              {{ $store.state.activeLocation }}
+            </div>
           </template>
-          <b-navbar-item href="#">Bangkok</b-navbar-item>
-          <b-navbar-item href="#">Chiang Mai</b-navbar-item>
-          <b-navbar-item href="#">Phitsanulok</b-navbar-item>
+          <b-navbar-item
+            v-for="location in $store.state.locations"
+            :key="location"
+            @click="$store.dispatch(`changeLocation`, location)"
+          >
+            {{ location }}
+          </b-navbar-item>
         </b-navbar-dropdown>
         <b-navbar-dropdown class="has-dropdown navbar-item has-dropdown">
           <template #label>
